@@ -2,6 +2,13 @@
   export let location;
   import { onMount } from "svelte";
 
+  import { icons, landmarks } from "../stores.js";
+  import { MapRef } from '../firebase.js';
+
+  let map;
+  let iconLayer;
+  let localIcons = {};
+
   const yx = L.latLng;
   const xy = function(x, y) {
     if (L.Util.isArray(x)) {
@@ -11,37 +18,56 @@
     return yx(y, x); // When doing xy(x, y);
   };
 
-  function initMap() {
-    const icon = L.icon({
-      iconUrl: "copper.png",
-      // shadowUrl: "leaf-shadow.png",
+  function iconsChanged(data) {
+    console.log("icons", data);
 
-      iconSize: [38, 38], // size of the icon
-      // shadowSize: [50, 64], // size of the shadow
-      iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-      // shadowAnchor: [4, 62], // the same for the shadow
-      popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    data.forEach(icon => {
+      localIcons[icon.id] = L.icon({
+        iconUrl: icon.image,
+        iconSize: [38, 38],
+        iconAnchor: [0, 0],
+        popupAnchor: [38/2.0, 38/2.0]
+      });
     });
+  }
 
-    const map = L.map("map", {
+  function landmarksChanged(data) {
+    iconLayer.clearLayers();
+    data.forEach((landmark) => {
+      const icon = localIcons[landmark.icon];
+      console.log('icon', icon);
+      const location = xy(landmark.x, landmark.y);
+      L.marker(location, { icon })
+        .addTo(iconLayer)
+        .bindPopup(landmark.message);
+    });
+  }
+
+  function initMap() {
+    map = L.map("map", {
       crs: L.CRS.Simple
     });
+
+    iconLayer = L.layerGroup().addTo(map);
 
     const bounds = [
       [0, 0],
       [1000, 1000]
     ];
 
-    const image = L.imageOverlay("/map.png", bounds).addTo(map);
     map.fitBounds(bounds);
 
-    const deneb = xy(500, 500);
-    L.marker(deneb, {icon})
-      .addTo(map)
-      .bindPopup('Copper. These minerals spawn every 40 minutes');
+    MapRef.getDownloadURL().then((url) => {
+      const image = L.imageOverlay(url, bounds).addTo(map);
+    });
   }
 
-  onMount(initMap);
+  onMount(() => {
+    initMap();
+
+    icons.subscribe(iconsChanged);
+    landmarks.subscribe(landmarksChanged);
+  });
 </script>
 
 <div>

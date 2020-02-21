@@ -1,5 +1,5 @@
 // Definitely need to do some sort of linking with Firebase here
-import { writable } from 'svelte/store';
+import { writable, readable } from 'svelte/store';
 
 // Might potentially move this to a utility somewhere
 const createLocalStore = (key, startValue) => {
@@ -7,6 +7,7 @@ const createLocalStore = (key, startValue) => {
   const store = writable(startValue);
 
   // Initialize value from localStorage
+  // TODO: Unsfe, wrap key with some sort of namespace
   const json = localStorage.getItem(key);
   if (json) {
     try {
@@ -20,7 +21,11 @@ const createLocalStore = (key, startValue) => {
   store.subscribe(current => {
     localStorage.setItem(key, JSON.stringify(current));
   });
+
+  return store;
 }
 
 // User data as an obserable, persisted to local storage on change
 export const user = createLocalStore('user');
+export const icons = writable([]);
+export const landmarks = writable([]);

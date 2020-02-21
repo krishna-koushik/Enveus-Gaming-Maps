@@ -31,16 +31,6 @@
         Home
       </a>
 
-      {#if $user}
-        <a class="navbar-item" href="/profile" use:link>
-          Profile
-        </a>
-
-        <a class="navbar-item" href="/search" use:link>
-          Find Local Musicians
-        </a>
-      {/if}
-
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
           More
@@ -55,6 +45,16 @@
           </a>
         </div>
       </div>
+
+      {#if $user}
+        <a class="navbar-item" href="/map" use:link>
+          Map
+        </a>
+
+        <button class="button is-primary" on:click={logout}>
+          Logout
+        </button>
+      {/if}
     </div>
 
     {#if !$user}
