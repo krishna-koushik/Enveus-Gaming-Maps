@@ -51,7 +51,7 @@
           Map
         </a>
 
-        <button class="button is-primary" on:click={logout}>
+        <button class="navbar-item button is-primary" style="height:52px" on:click={logout}>
           Logout
         </button>
       {/if}

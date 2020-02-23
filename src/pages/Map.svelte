@@ -72,7 +72,9 @@
 
 <div>
   <sidebar>
-    <h1>Map Controls</h1>
+    <div>
+      <h1>Map Controls</h1>
+    </div>
   </sidebar>
 
   <div id="map"></div>
@@ -96,5 +98,6 @@
   }
 
   #map {
+    background: rgb(128, 128, 128);
   }
 </style>
