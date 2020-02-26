@@ -1,8 +1,9 @@
 <script>
-  import { link } from "svelte-spa-router";
+  import { link, navigate } from "svelte-routing";
   import { user } from "../stores.js";
   function logout() {
     $user = undefined;
+    navigate('/login')
   }
 </script>
 
@@ -78,3 +79,9 @@
     {/if}
   </div>
 </nav>
+
+<style>
+  .is-hoverable {
+    z-index: 2000 !important;
+  }
+</style>

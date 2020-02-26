@@ -1,10 +1,12 @@
 <script>
+  import { navigate } from 'svelte-routing';
   import AuthService from '../services/AuthService';
   let email = '';
   let password = '';
-  function login(e) {
+  async function login(e) {
     e.preventDefault();
-    AuthService.login(email, password);
+    await AuthService.login(email, password);
+    navigate('/');
   }
 </script>
 
@@ -16,7 +18,6 @@
       <input class='input is-primary' bind:value={password} type="password" autocomplete="current-password" title="Password" placeholder="Password" />
       
       <button type="submit" class="button is-primary">Login</button>
-      <button class="button is-link">Link</button>
 
       <p>
         <a class="forgot" href="/auth/forgot">Forgot Username/Password?</a>
@@ -44,5 +45,6 @@
 
   .login-form{
     background: rgba(0,0,0,.8);
+    padding: 20px;
   }
 </style>
