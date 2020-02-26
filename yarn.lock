@@ -5589,6 +5589,11 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
+svelte-routing@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/svelte-routing/-/svelte-routing-1.4.0.tgz#09285f3c7b19f509dfb1289fbc1235b348aa7d80"
+  integrity sha512-09ypn0/vD2PcuyZEEocUHFgi7kvLOxSoUUuJZ4j3p4Y4sT/kMIWtHIRpnLdsr8bQ+sGo77sbEkO+av6yd1RjPg==
+
 svelte-spa-router@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/svelte-spa-router/-/svelte-spa-router-2.0.0.tgz#704e0d2a72e43f146b0c4ba67f8c6fd695132ec9"

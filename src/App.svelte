@@ -1,5 +1,7 @@
 <script>
-  import Router from 'svelte-spa-router';
+  import { user } from './stores';
+  
+  import { Router, Link, Route } from "svelte-routing";
 
   // Components
   import Nav from './components/Nav.svelte';
@@ -10,22 +12,58 @@
   import Login from './pages/Login.svelte';
   import Register from './pages/Register.svelte';
   import Map from './pages/Map.svelte';
+
+  // Admin routes/pages
+  import UserAdministration from './pages/admin/Users.svelte';
+  import IconAdministration from './pages/admin/Icons.svelte';
+  import LandmarkAdministration from './pages/admin/Landmarks.svelte';
+
+  // Catch all/routing errors
   import NotFound from './pages/NotFound.svelte';
 
-  const routes = {
-    '/': Welcome,
-    '/login': Login,
-    '/register': Register,
-    '/map': Map,
-    '*': NotFound, // Catch-all
-  }
+  export let url = "";
 </script>
 
 <Nav></Nav>
 
-<div>
-  <Router routes={routes}></Router>
-</div>
+<!-- App Container -->
+<Router url="{url}">
+  <div>
+    <Route path="/">
+      <Welcome />
+    </Route>
+
+    {#if $user}
+      <Route path="/map">
+        <Map />
+      </Route>
+
+      <Route path="/admin/users">
+        <UserAdministration />
+      </Route>
+
+      <Route path="/admin/icons">
+        <IconAdministration />
+      </Route>
+
+      <Route path="/admin/landmarks">
+        <LandmarkAdministration />
+      </Route>
+    {:else}
+      <Route path="/login">
+        <Login />
+      </Route>
+
+      <Route path="/register">
+        <Register />
+      </Route>
+    {/if}
+
+    <Route path="*">
+      <NotFound />
+    </Route>
+  </div>
+</Router>
 
 <Footer></Footer>
 

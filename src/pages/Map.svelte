@@ -2,8 +2,10 @@
   export let location;
   import { onMount } from "svelte";
 
-  import { icons, landmarks } from "../stores.js";
+  import { icons, landmarks, filters } from "../stores.js";
   import { MapRef } from '../firebase.js';
+
+  import MapControls from '../components/MapControls.svelte';
 
   let map;
   let iconLayer;
@@ -43,6 +45,10 @@
     });
   }
 
+  function filtersChanged(data) {
+    console.log(data);
+  }
+
   function initMap() {
     map = L.map("map", {
       crs: L.CRS.Simple
@@ -57,6 +63,7 @@
 
     map.fitBounds(bounds);
 
+    // TODO: Secure this so only authenticated users can access
     MapRef.getDownloadURL().then((url) => {
       const image = L.imageOverlay(url, bounds).addTo(map);
     });
@@ -67,14 +74,13 @@
 
     icons.subscribe(iconsChanged);
     landmarks.subscribe(landmarksChanged);
+    filters.subscribe(filtersChanged);
   });
 </script>
 
 <div>
   <sidebar>
-    <div>
-      <h1>Map Controls</h1>
-    </div>
+    <MapControls></MapControls>
   </sidebar>
 
   <div id="map"></div>

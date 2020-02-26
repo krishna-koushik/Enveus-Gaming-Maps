@@ -31,20 +31,25 @@
         Home
       </a>
 
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More
-        </a>
+      {#if $user}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Admin
+          </a>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="/about" use:link>
-            About
-          </a>
-          <a class="navbar-item" href="/contact" use:link>
-            Contact
-          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/admin/users" use:link>
+              User Admin
+            </a>
+            <a class="navbar-item" href="/admin/icons" use:link>
+              Icon/Resource Admin
+            </a>
+            <a class="navbar-item" href="/admin/landmarks" use:link>
+              Landmark Admin
+            </a>
+          </div>
         </div>
-      </div>
+      {/if}
 
       {#if $user}
         <a class="navbar-item" href="/map" use:link>
