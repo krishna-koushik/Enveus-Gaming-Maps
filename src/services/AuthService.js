@@ -1,11 +1,9 @@
-import { Auth } from '../firebase';
+import { Auth, Functions } from '../firebase';
 
 import { user } from '../stores';
 
 class AuthService {
   static async login(email, password) {
-    console.log(email, password);
-
     const authUser = await Auth.signInWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -13,11 +11,13 @@ class AuthService {
       // ...
     });
 
-    console.log(authUser);
-
     if (authUser) {
       user.set(authUser)
     }
+  }
+
+  static async register(email, password) {
+    return Functions.addTempUser({ email, password });
   }
 }
 

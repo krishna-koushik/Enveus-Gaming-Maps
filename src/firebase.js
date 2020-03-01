@@ -8,6 +8,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/functions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPY9Na_um_TxR9sGVv69Z-5R1FAzMHVOQ",
@@ -29,7 +30,10 @@ export const Storage = firebase.storage();
 export const MapRef = Storage.refFromURL('gs://enveus-maps.appspot.com/map.png');
 
 // store hookup
-import { icons, landmarks } from './stores';
+import { icons, landmarks, tempUsers } from './stores';
+
+const getDataFromDoc = doc => doc.data();
+const getDataFromSnapshot = snapshot => snapshot.docs.map(getDataFromDoc);
 
 DB.collection('icons').onSnapshot((snapshot) => {
   icons.set(snapshot.docs.map(doc => doc.data()));
@@ -38,3 +42,11 @@ DB.collection('icons').onSnapshot((snapshot) => {
 DB.collection('landmarks').onSnapshot((snapshot) => {
   landmarks.set(snapshot.docs.map(doc => doc.data()));
 });
+
+DB.collection('tempUsers').onSnapshot((snapshot) => {
+  tempUsers.set(getDataFromSnapshot(snapshot));
+});
+
+export const Functions = {
+  addTempUser: firebase.functions().httpsCallable('addTempUser'),
+}

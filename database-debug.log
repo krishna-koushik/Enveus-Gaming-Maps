@@ -1,0 +1,12 @@
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by io.netty.util.internal.ReflectionUtil (file:/home/ty/.cache/firebase/emulators/firebase-database-emulator-v4.4.0.jar) to field sun.nio.ch.SelectorImpl.selectedKeys
+WARNING: Please consider reporting this to the maintainers of io.netty.util.internal.ReflectionUtil
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+13:57:22.519 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+13:57:22.610 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000
+14:02:59.536 [Thread-0] INFO com.firebase.server.forge.App$ - Attempting graceful shutdown.
+14:02:59.543 [NamespaceSystem-akka.actor.default-dispatcher-7] INFO com.firebase.core.namespace.Terminator$Terminator - 1 actors left to terminate: enveus-maps
+14:02:59.545 [NamespaceSystem-akka.actor.default-dispatcher-10] INFO com.firebase.core.namespace.NamespaceActor - Stopping namespace actor for enveus-maps
+14:02:59.546 [NamespaceSystem-akka.actor.default-dispatcher-10] INFO com.firebase.core.namespace.NamespaceActor - Gauges removed for enveus-maps
+14:02:59.547 [Thread-0] INFO com.firebase.server.forge.App$ - Graceful shutdown complete.

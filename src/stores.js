@@ -30,6 +30,4 @@ export const user = createLocalStore('user');
 export const icons = writable([]);
 export const landmarks = writable([]);
 export const filters = writable({});
-export const users = writable([{
-  asd: 'test',
-}])
+export const tempUsers = writable([])

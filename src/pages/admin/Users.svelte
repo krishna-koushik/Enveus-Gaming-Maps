@@ -1,11 +1,19 @@
 <script>
-  import { users } from '../../stores';
+  import { tempUsers } from '../../stores';
 
   import DataTable from '../../components/DataTable.svelte';
 
   const columns = [{
-    header: 'Asd',
-    accessor: 'asd',
+    header: 'Email',
+    accessor: 'email',
+  }, {
+    header: 'Guild Alias',
+    accessor: 'alias',
+  }, {
+    header: 'Accept',
+    accessor: (user) => {
+      return 'asdf';
+    },
   }];
 </script>
 
@@ -13,7 +21,7 @@
 
 <DataTable 
   columns={columns} 
-  data={$users}
+  data={$tempUsers}
 />
 
 <style>

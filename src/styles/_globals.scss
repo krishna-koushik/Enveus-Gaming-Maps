@@ -20,4 +20,12 @@ form {
     color: $link-color;
     font-size: 1.3em;
   }
+
+  button.is-primary {
+    color: black;
+  }
+}
+
+.error {
+  color: $danger;
 }

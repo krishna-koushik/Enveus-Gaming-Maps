@@ -51,6 +51,17 @@
 		
 		console.log(data[0])
 	}
+
+	function getValue(row, accessor) {
+		console.log(row, accessor);
+		console.log(typeof accessor);
+		if (typeof accessor === 'function') {
+			console.log('going for function accesssor');
+			return accessor(row);
+		}
+
+		return row[accessor];
+	}
 </script>
 
 <div>
@@ -72,7 +83,7 @@
 			<tr>
 				{#each columns as column}
 					<td>
-						{row[column.accessor]}
+						{getValue(row, column.accessor)}
 					</td>
 				{/each}
 			</tr>

@@ -11,6 +11,7 @@
   import Welcome from './pages/Welcome.svelte';
   import Login from './pages/Login.svelte';
   import Register from './pages/Register.svelte';
+  import Forgot from './pages/Forgot.svelte';
   import Map from './pages/Map.svelte';
 
   // Admin routes/pages
@@ -29,11 +30,11 @@
 <!-- App Container -->
 <Router url="{url}">
   <div>
-    <Route path="/">
-      <Welcome />
-    </Route>
-
     {#if $user}
+      <Route path="/">
+        <Welcome />
+      </Route>
+
       <Route path="/map">
         <Map />
       </Route>
@@ -50,12 +51,20 @@
         <LandmarkAdministration />
       </Route>
     {:else}
+      <Route path="/">
+        <Login />
+      </Route>
+
       <Route path="/login">
         <Login />
       </Route>
 
       <Route path="/register">
         <Register />
+      </Route>
+
+      <Route path="/forgot">
+        <Forgot />
       </Route>
     {/if}
 

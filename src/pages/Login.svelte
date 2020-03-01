@@ -20,7 +20,7 @@
       <button type="submit" class="button is-primary">Login</button>
 
       <p>
-        <a class="forgot" href="/auth/forgot">Forgot Username/Password?</a>
+        <a class="forgot" href="/forgot">Forgot Username/Password?</a>
       </p>
     </form>
   </div>
@@ -41,6 +41,10 @@
   input:nth-of-type(2) {
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  input::placeholder {
+    color: rgb(53, 50, 50);
   }
 
   .login-form{
