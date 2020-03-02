@@ -58,7 +58,7 @@
   <div class='landmark-container'>
     {#each $icons as icon}
       <div on:click={(e) => setIcon(icon)}>
-        <img class='icon-image-large' src={icon.image} />
+        <img class='icon-image-large' src={icon.image} alt=''/>
         <!-- {icon.name} -->
       </div>
     {/each}
