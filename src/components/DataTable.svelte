@@ -16,8 +16,6 @@
 	});
 	
 	function sort(index, mode) {
-		console.log(index, mode)
-		
 		columns = columns.map((c, i) => {
 			if (i === index) {
 				c.sorting = mode
@@ -39,24 +37,17 @@
 			}
 			
 			if (column.sorting === SORT_ASCENDING) {
-				console.log('asc sort')
 				if (a[column.accessor] < b[column.accessor]) return -1;
 			}
 			
 			if (column.sorting === SORT_DESCENDING) {
-				console.log('desc sort')
 				if (b[column.accessor] < a[column.accessor]) return -1;
 			}
 		});
-		
-		console.log(data[0])
 	}
 
 	function getValue(row, accessor) {
-		console.log(row, accessor);
-		console.log(typeof accessor);
 		if (typeof accessor === 'function') {
-			console.log('going for function accesssor');
 			return accessor(row);
 		}
 

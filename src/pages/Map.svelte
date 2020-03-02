@@ -4,12 +4,15 @@
 
   import { icons, landmarks, filters } from "../stores.js";
   import { MapRef } from '../firebase.js';
+  import LandmarkService from '../services/LandmarkService.js';
 
   import MapControls from '../components/MapControls.svelte';
 
   let map;
   let iconLayer;
   let localIcons = {};
+
+  let clickedPosition;
 
   const yx = L.latLng;
   const xy = function(x, y) {
@@ -21,8 +24,6 @@
   };
 
   function iconsChanged(data) {
-    console.log("icons", data);
-
     data.forEach(icon => {
       localIcons[icon.id] = L.icon({
         iconUrl: icon.image,
@@ -37,11 +38,21 @@
     iconLayer.clearLayers();
     data.forEach((landmark) => {
       const icon = localIcons[landmark.icon];
-      console.log('icon', icon);
       const location = xy(landmark.x, landmark.y);
-      L.marker(location, { icon })
+
+      const marker = L.marker(location, { icon, draggable: 'true' })
         .addTo(iconLayer)
         .bindPopup(landmark.message);
+
+      marker.on('dragend', function(event) {
+        const position = marker.getLatLng();
+        marker.setLatLng(position, {
+          draggable: 'true'
+        }).bindPopup(position).update();
+
+        // TODO: Set data in firebase
+        LandmarkService.updateLandmark(landmark, marker);
+      });
     });
   }
 
@@ -75,12 +86,20 @@
     icons.subscribe(iconsChanged);
     landmarks.subscribe(landmarksChanged);
     filters.subscribe(filtersChanged);
+
+    map.on('click', function(e) {
+      console.log(e.latlng);
+      clickedPosition = e.latlng;
+      // alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+    });
   });
 </script>
 
 <div>
   <sidebar>
-    <MapControls></MapControls>
+    <MapControls 
+      clickedPosition={clickedPosition}
+    ></MapControls>
   </sidebar>
 
   <div id="map"></div>

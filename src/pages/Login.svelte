@@ -17,7 +17,7 @@
       <input class='input is-primary' bind:value={email} type="text" autocomplete="username" title="Email Address" placeholder="Email Address" />
       <input class='input is-primary' bind:value={password} type="password" autocomplete="current-password" title="Password" placeholder="Password" />
       
-      <button type="submit" class="button is-primary">Login</button>
+      <button type="submit" class="button is-success">Login</button>
 
       <p>
         <a class="forgot" href="/forgot">Forgot Username/Password?</a>

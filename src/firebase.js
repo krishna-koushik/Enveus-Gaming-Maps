@@ -24,10 +24,16 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Firebase declarations
 export const Auth = firebase.auth();
 export const DB = firebase.firestore();
 export const Storage = firebase.storage();
 export const MapRef = Storage.refFromURL('gs://enveus-maps.appspot.com/map.png');
+
+// Collections
+export const Icons = DB.collection('icons');
+export const Landmarks = DB.collection('landmarks');
+export const TempUsers = DB.collection('tempUsers');
 
 // store hookup
 import { icons, landmarks, tempUsers } from './stores';
@@ -35,15 +41,15 @@ import { icons, landmarks, tempUsers } from './stores';
 const getDataFromDoc = doc => doc.data();
 const getDataFromSnapshot = snapshot => snapshot.docs.map(getDataFromDoc);
 
-DB.collection('icons').onSnapshot((snapshot) => {
+Icons.onSnapshot((snapshot) => {
   icons.set(snapshot.docs.map(doc => doc.data()));
 });
 
-DB.collection('landmarks').onSnapshot((snapshot) => {
+Landmarks.onSnapshot((snapshot) => {
   landmarks.set(snapshot.docs.map(doc => doc.data()));
 });
 
-DB.collection('tempUsers').onSnapshot((snapshot) => {
+TempUsers.onSnapshot((snapshot) => {
   tempUsers.set(getDataFromSnapshot(snapshot));
 });
 
