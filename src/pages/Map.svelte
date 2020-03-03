@@ -3,13 +3,15 @@
   import { onMount } from "svelte";
 
   import { icons, landmarks, filters } from "../stores.js";
-  import { MapRef } from '../firebase.js';
+  import { MapRef } from "../firebase.js";  
+  import LandmarkService from '../services/LandmarkService.js';
 
-  import MapControls from '../components/MapControls.svelte';
+  import MapControls from "../components/MapControls.svelte";
 
   let map;
   let iconLayer;
   let localIcons = {};
+  let clickedPosition; 
 
   const yx = L.latLng;
   const xy = function(x, y) {
@@ -28,20 +30,33 @@
         iconUrl: icon.image,
         iconSize: [38, 38],
         iconAnchor: [0, 0],
-        popupAnchor: [38/2.0, 38/2.0]
+        popupAnchor: [38 / 2.0, 38 / 2.0]
       });
     });
   }
 
   function landmarksChanged(data) {
     iconLayer.clearLayers();
-    data.forEach((landmark) => {
+    data.forEach(landmark => {
       const icon = localIcons[landmark.icon];
-      console.log('icon', icon);
+      console.log("icon", icon);
       const location = xy(landmark.x, landmark.y);
-      L.marker(location, { icon })
+
+      const marker = L.marker(location, { icon, draggable: "true" })
         .addTo(iconLayer)
         .bindPopup(landmark.message);
+
+      marker.on("dragend", function(event) {
+        const position = marker.getLatLng();
+        marker
+          .setLatLng(position, {
+            draggable: "true"
+          })
+          .bindPopup(position)
+          .update();
+        // TODO: Set data in firebase
+        LandmarkService.updateLandmark(landmark, marker);
+      });
     });
   }
 
@@ -49,13 +64,17 @@
     console.log(data);
   }
 
-  function saveResource(landmark){
+  function saveResource(landmark) {
     console.log("Trying to save to firebase.");
   }
 
   function initMap() {
     map = L.map("map", {
       crs: L.CRS.Simple
+    });
+
+    map.on('click', (e) => {
+      clickedPosition = e.latlng;
     });
 
     iconLayer = L.layerGroup().addTo(map);
@@ -68,7 +87,7 @@
     map.fitBounds(bounds);
 
     // TODO: Secure this so only authenticated users can access
-    MapRef.getDownloadURL().then((url) => {
+    MapRef.getDownloadURL().then(url => {
       const image = L.imageOverlay(url, bounds).addTo(map);
     });
   }
@@ -84,7 +103,7 @@
 
 <div>
   <sidebar>
-    <MapControls></MapControls>
+    <MapControls clickedPosition={clickedPosition}></MapControls>
   </sidebar>
 
   <div id="map"></div>

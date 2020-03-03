@@ -7,7 +7,6 @@
   import LandmarkService from '../services/LandmarkService.js';
   import { icons, filters } from '../stores.js';
 
-
   function clearData() {
     landmarkMessage = '';
     clickedIcon = { id: '', name: ''}
