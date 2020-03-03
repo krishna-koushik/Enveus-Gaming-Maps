@@ -32,14 +32,14 @@
   <div>
     {#if $user}
       <Route path="/">
-        <Welcome />
+        <Map />
       </Route>
 
       <Route path="/map">
         <Map />
       </Route>
 
-      <Route path="/admin/users">
+      <!-- <Route path="/admin/users">
         <UserAdministration />
       </Route>
 
@@ -49,7 +49,7 @@
 
       <Route path="/admin/landmarks">
         <LandmarkAdministration />
-      </Route>
+      </Route> -->
     {:else}
       <Route path="/">
         <Login />

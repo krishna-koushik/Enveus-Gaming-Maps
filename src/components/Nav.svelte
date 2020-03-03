@@ -10,7 +10,7 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/" use:link>
-      <img class="image is-32x32" src="/logo.png" />
+      <img class="image is-32x32" src="/logo.png" alt=''/>
     </a>
 
     <a
@@ -32,7 +32,7 @@
         Home
       </a>
 
-      {#if $user}
+      <!-- {#if $user}
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             Admin
@@ -50,7 +50,7 @@
             </a>
           </div>
         </div>
-      {/if}
+      {/if} -->
 
       {#if $user}
         <a class="navbar-item" href="/map" use:link>
